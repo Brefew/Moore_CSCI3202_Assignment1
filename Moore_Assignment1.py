@@ -2,7 +2,24 @@
 
 import Queue
 
-q = Queue.Queue()
+class Queue():
+	
+	q = Queue.Queue()
+	
+	def __init__(self):
+		pass
+		
+	def queueSize(self):
+		return self.q.queueSize()
+	
+	def empty(self):
+		return self.q.empty()
+		
+	def put(self, integer):
+		self.q.put(integer)
+		
+	def get(self):
+		return self.q.get()
 
 class Stack:
 	def __init__(self):
@@ -114,16 +131,19 @@ def main():
 	
 	print "Checking the FIFO Queue: "
 	
-	print "Integers 0-9 are added to the Queue in order."
+	q = Queue()
+	print "Integers 0-9 inserted in order"
 	for i in range(10):
 		q.put(i)
-		
-	while not q.empty():
-		print "Dequeuing: ", q.get(i)
-		
-	print "All elements dequeued.\n"
 	
-	print "Checking the integer stack:"
+	print "Integers in order of dequeue:"
+	while not q.empty():
+		print "Dequeueing: ",q.get()
+	
+	print "All integers dequeued and queue is deleted"	
+	del q
+	
+	print "\nChecking the integer stack:"
 	
 	s = Stack()
 	
