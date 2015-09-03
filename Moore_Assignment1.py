@@ -86,21 +86,21 @@ class BinaryTree():
 			
 	def delete(self, value):
 		if not self._delete(value, self.root):
-			print "Node not found; could not be deleted"
+			print "Node %d not found; could not be deleted" % value
 			
 	def _delete(self, value, node):
 		if node.key == value:
 			if node.left is not None or node.right is not None:
-				print "Node contains children; could not be deleted"
+				print "Node %d contains children; could not be deleted" % value
 				return True
 			else:
 				if node.parent.left == self:
 					node.parent.left = None
-					print "Node deleted from tree"
+					print "Node %d deleted from tree" % value
 				else:
 					node.parent.right = None
-					print "Node deleted from tree"
-				del node
+					print "Node %d deleted from tree" % value
+				del self
 				return True
 			
 		else:
@@ -125,6 +125,41 @@ class BinaryTree():
 			self._printTree(node.left)
 			self._printTree(node.right)
 					
+
+class UnweightedGraph(object):
+	vertices = {}
+	
+	def __init__(self):
+		pass 
+		
+	def addVertex(self,value):
+		if value in self.vertices:
+			print "Vertex already exists: ", value
+		else:
+			self.vertices[value] = []
+			
+	def addEdge(self, value1, value2):
+		if value1 == value2:
+			print "Edge must connect two different vertices"
+		elif not (value1 in self.vertices and value2 in self.vertices):
+			print "One or more vertices not found"
+		else:
+			if value2 in self.vertices[value1]:
+				print "Edge already exist between vertices"
+			else:
+				self.vertices[value1].append(value2)
+			
+			if value1 in self.vertices[value2]:
+				print "Edge already exists between vertices"
+			else:
+				self.vertices[value2].append(value1)
+				
+	def findVertex(self, value):
+		if value in self.vertices:
+			print self.vertices[value]
+		else: 
+			print "Vertex not found"
+
 	
 	
 def main():
@@ -179,5 +214,36 @@ def main():
 	tree.delete(3)
 	tree.delete(10)
 	tree.printTree()
+	
+	print "\nNow testing Graph class"
+	g = UnweightedGraph()
+	print "Adding vertices 0-9 to graph"
+	for i in range(10):
+		g.addVertex(i)
+		print "Adding vertex ",i
+	print "\nCreating edges between vertices"
+	for i in range(1,10):
+		g.addEdge(0,i)
+		print "Adding edge (0,%d)" %i
+	for i in range(2,10):
+		g.addEdge(2, i)
+		print "Adding edge (2,%d)" %i
+	g.addEdge(4,5)
+	g.addEdge(8,10)
+	g.addEdge(5,7)
+	
+	print "Finding adjacent vertexes"
+	g.findVertex(0)
+	print "Adjacent vertices of 0"
+	g.findVertex(1)
+	print "Adjacent vertices of 1"
+	g.findVertex(2)
+	print "Adjacent vertices of 2"
+	g.findVertex(3)
+	print "Adjacent vertices of 3"
+	g.findVertex(7)
+	print "Adjacent vertices of 7"
+	
+	
 	
 if  __name__ =='__main__':main()
